@@ -7,6 +7,13 @@ exports.findAll = () => {
     .then((result) => result[0])
 }
 
+exports.findOne = (studentId) => {
+  return db
+    .promise()
+    .query("SELECT * FROM `students` WHERE ID = ?", [studentId])
+    .then(([result]) => result)
+}
+
 exports.addOne = (student) => {
   const { firstname, lastname, age, campus, remote } = student
   return db

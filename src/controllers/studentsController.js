@@ -9,6 +9,21 @@ exports.getAll = (req, res) => {
     .catch((err) => res.status(500).send(err))
 }
 
+exports.getOne = (req, res) => {
+  const studentId = req.params.id
+
+  studentsDataAccess
+    .findOne(studentId)
+    .then((student) => {
+      if (student.length === 0) {
+        res.sendStatus(404)
+      } else {
+        res.send(student[0])
+      }
+    })
+    .catch((err) => res.status(500).send(err))
+}
+
 exports.createOne = (req, res) => {
   const { firstname, lastname, age, campus, remote } = req.body
 
