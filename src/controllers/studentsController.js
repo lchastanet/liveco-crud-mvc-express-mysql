@@ -58,3 +58,18 @@ exports.updateOne = (req, res) => {
       .catch((err) => res.status(500).send({ err }))
   }
 }
+
+exports.deleteOne = (req, res) => {
+  const studentId = req.params.id
+
+  studentsDataAccess
+    .removeOne(studentId)
+    .then((info) => {
+      if (info) {
+        res.sendStatus(204)
+      } else {
+        res.sendStatus(404)
+      }
+    })
+    .catch((err) => res.status(500).send({ err }))
+}

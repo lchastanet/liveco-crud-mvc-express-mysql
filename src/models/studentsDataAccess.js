@@ -28,3 +28,15 @@ exports.replaceOne = (studentId, student) => {
       return { id: studentId, ...student }
     })
 }
+
+exports.removeOne = (studentId) => {
+  return db
+    .promise()
+    .query("DELETE FROM `students` WHERE ID = ?", [studentId])
+    .then(([result]) => {
+      if (result.affectedRows) {
+        return true
+      }
+      return false
+    })
+}
