@@ -6,5 +6,6 @@ const router = express.Router()
 
 router.get("/", studentsController.getAll)
 router.post("/", studentsController.createOne)
+router.put("/:id", studentsController.updateOne)
 
 module.exports = router

@@ -19,3 +19,12 @@ exports.addOne = (student) => {
       return { id: result.insertId, firstname, lastname, age, campus, remote }
     })
 }
+
+exports.replaceOne = (studentId, student) => {
+  return db
+    .promise()
+    .query("UPDATE `students` SET ? WHERE ID = ?", [student, studentId])
+    .then(([result]) => {
+      return { id: studentId, ...student }
+    })
+}

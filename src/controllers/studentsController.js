@@ -32,3 +32,29 @@ exports.createOne = (req, res) => {
       .catch((err) => res.status(500).send({ err }))
   }
 }
+
+exports.updateOne = (req, res) => {
+  const studentId = req.params.id
+
+  const { firstname, lastname, age, campus, remote } = req.body
+
+  const { error: validationErrors } = Joi.object({
+    firstname: Joi.string().max(255).required(),
+    lastname: Joi.string().max(255).required(),
+    age: Joi.number().min(0).required(),
+    campus: Joi.string().max(255).required(),
+    remote: Joi.boolean().required(),
+  }).validate(
+    { firstname, lastname, age, campus, remote },
+    { abortEarly: false }
+  )
+
+  if (validationErrors) {
+    res.status(400).json({ errors: validationErrors.details })
+  } else {
+    studentsDataAccess
+      .replaceOne(studentId, req.body)
+      .then((info) => res.status(200).json(info))
+      .catch((err) => res.status(500).send({ err }))
+  }
+}
